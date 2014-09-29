@@ -52,3 +52,7 @@ docs/_build/
 
 # PyBuilder
 target/
+
+db.sqlite
+secret.txt
+

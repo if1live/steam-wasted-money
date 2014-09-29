@@ -1,0 +1,10 @@
+django==1.6.5
+git+https://github.com/amitu/importd.git
+requests
+jinja2
+django-debug-toolbar==1.2.1
+django-jinja
+django-extensions
+werkzeug
+nose
+django-nose==1.2
