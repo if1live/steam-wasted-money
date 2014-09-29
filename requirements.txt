@@ -8,3 +8,4 @@ django-extensions
 werkzeug
 nose
 django-nose==1.2
+babel

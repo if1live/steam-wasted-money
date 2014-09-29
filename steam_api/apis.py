@@ -17,7 +17,7 @@ class SteamIDApi(object):
             if 'g_rgProfileData' in line:
                 uid = self.read_id(line)
                 return uid
-        raise AssertionError('do-not-reach')
+        return None
 
     def read_id(self, line):
         u'''
@@ -73,9 +73,12 @@ class OwnedGameApi(object):
             'format': 'json'
         }
         r = requests.get(url, params=params)
+        if 'games' not in r.json()['response']:
+            return []
+
         data = r.json()['response']['games']
-        retval = {}
+        retval = []
         for x in data:
             appid = x['appid']
-            retval[appid] = {}
+            retval.append(appid)
         return retval

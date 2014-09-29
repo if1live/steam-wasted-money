@@ -1,0 +1,146 @@
+<!doctype html>
+{% import '_macros.html' as macros %}
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>박주선 의원 때문에 사라질 스팀 게임값 계산기</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Static navbar -->
+    <div class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">스팀 예상 피해 금액계산기</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">협력업체 <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="http://trademyinfo.libsora.so/">
+                                    No.1 온라인 개인정보 거래소 Trade My Info
+                            </a>
+                            </li>
+                            <li>
+                                <a href="http://newlife.libsora.so">
+                                    새로운 개인정보, 새로운 인생 New Life
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/">
+                                    스팀 예상 피해금액 계산기
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div><!--/.container-fluid -->
+    </div>
+
+<div class="jumbroton">
+<h1>
+    <a href="https://ko-kr.facebook.com/pages/%EB%B0%95%EC%A3%BC%EC%84%A0-%ED%99%88%ED%8E%98%EC%9D%B4%EC%A7%80/169805729779191">박주선의원</a>때문에 사라질 스팀게임값 계산기
+</h1>
+<p class="lead">
+2014년 9년 29일, 국회 교육문화체육관광위원회 박주선 의원(새정치민주연합)의 발언으로 인해서 스팀을 국내에서 사용할 수 없을지도 모른다는 의견이 나왔습니다. 진짜로 스팀을 사용하지 못할 것이라고 가정하고 그때의 피해금액이 얼마인지 각자 계산해봅시다.
+</p>
+<p class="text-center">
+    <a class="btn btn-lg btn-success" href="http://gameshot.net/common/con_view.php?code=GA5428be22f3100" role="button" target="_blank">"스팀, 국내 서비스 중단 위기" 기사보기</a>
+</p>
+<p class="text-center">
+<img src="/static/steam-logo.jpg"/>
+</p>
+</div>
+
+{% if error_message %}
+<div class="alert alert-danger" role="alert">{{ error_message }}</div>
+{% endif %}
+
+<form class="text-center" action="/" method="get">
+<p>
+스팀 아이디를 입력해주세요.<br/>
+http://steamcommunity.com/id/<input type="text" name="username" value="{{ username }}">
+<br/>
+</p>
+<p>
+<input type="submit" value="날릴 금액 계산하기" class="btn btn-primary btn-lg">
+</p>
+</form>
+
+<p class="text-center">
+    <!-- social -->
+    {{ macros.render_twitter_share() }}
+    {{ macros.render_facebook_like() }}
+</p>
+
+<h2>주의사항</h2>
+<ul>
+    <li>환율은 2014년 9월 29일 기준, 1 usd to {{ currency_ratio }} 으로 계산합니다.</li>
+    <li>게임값은 실시간 금액이 아닙니다. 이런 가격인 시절이 있었다 정도로 이해하시면 됩니다</li>
+    <li>간단하게 만든것이라고 오차가 있을수 있습니다.</li>
+</ul>
+
+
+{% if username %}
+<p class="calc-summary">
+{{ username }}님은 <a href="https://ko-kr.facebook.com/pages/%EB%B0%95%EC%A3%BC%EC%84%A0-%ED%99%88%ED%8E%98%EC%9D%B4%EC%A7%80/169805729779191">박주선 의원</a> 때문에 <strong>{{ total_usd|usd2krw }}원(${{ total_usd }})</strong>을 날릴 수 있습니다.
+</p>
+{% endif %}
+
+{% if product_list %}
+<table class="table">
+<thead>
+<tr>
+    <th>게임</th>
+    <th>가격(원)</th>
+    <th>가격(달러)</th>
+</tr>
+</thead>
+<tbody>
+    {% for product in product_list %}
+    <tr>
+        <td>{{ product.name }}</td>
+        <td>{{ (product.price / 100.0)|usd2krw }}원</td>
+        <td>${{ product.price / 100.0 }}</td>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+{% endif %}
+
+
+<!--
+{{ macros.render_disqus() }}
+-->
+
+<!-- Site footer -->
+<div class="footer">
+    <p>
+        <a href="//github.com/if1live/steam-wasted-money">Repo</a> |
+        <a href="//twitter.com/if1live">@if1live</a>
+        2014
+    </p>
+</div>
+
+
+</div><!-- //container -->
+
+{{ macros.render_google_analytics('UA-43577716-3') }}
+</body>
+</html>
